@@ -11,7 +11,7 @@ import it.xeniaprogetti.cloudiq.plugin.AlarmForwarder;
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
 
-@Command(scope = "opennms-opennms-cloudiq-plugin", name = "stats", description = "Show statistics.")
+@Command(scope = "opennms-cloudiq", name = "stats", description = "Show statistics.")
 @Service
 public class StatsCommand implements Action {
 

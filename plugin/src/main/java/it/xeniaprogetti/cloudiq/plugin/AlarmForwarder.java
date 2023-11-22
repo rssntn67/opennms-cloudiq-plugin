@@ -18,7 +18,7 @@ import com.codahale.metrics.MetricRegistry;
 public class AlarmForwarder implements AlarmLifecycleListener {
     private static final Logger LOG = LoggerFactory.getLogger(AlarmForwarder.class);
 
-    private static final String UEI_PREFIX = "uei.opennms.org/opennms-cloudiq-pluginPlugin";
+    private static final String UEI_PREFIX = "uei.opennms.org/cloudiqPlugin";
     private static final String SEND_EVENT_FAILED_UEI = UEI_PREFIX + "/sendEventFailed";
     private static final String SEND_EVENT_SUCCESSFUL_UEI = UEI_PREFIX + "/sendEventSuccessful";
 

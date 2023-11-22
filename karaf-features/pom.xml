@@ -83,9 +83,8 @@
                                 <feature>framework</feature>
                             </framework>
                             <features>
-                                <feature>opennms-plugins-opennms-cloudiq-plugin</feature>
+                                <feature>opennms-plugins-cloudiq</feature>
                                 <feature>okhttp</feature>
-                                <feature>guava</feature>
                             </features>
                         </configuration>
                     </execution>
@@ -113,7 +112,7 @@
 
         <dependency>
             <groupId>it.xeniaprogetti</groupId>
-            <artifactId>opennms-cloudiq-plugin-plugin</artifactId>
+            <artifactId>cloudiq-plugin</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

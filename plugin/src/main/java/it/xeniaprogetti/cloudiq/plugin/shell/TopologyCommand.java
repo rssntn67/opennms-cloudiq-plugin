@@ -10,7 +10,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import it.xeniaprogetti.cloudiq.plugin.TopologyForwarder;
 import it.xeniaprogetti.cloudiq.plugin.model.Topology;
 
-@Command(scope = "opennms-opennms-cloudiq-plugin", name = "push-topology", description = "Push the topology")
+@Command(scope = "opennms-cloudiq", name = "push-topology", description = "Push the topology")
 @Service
 public class TopologyCommand implements Action {
 

@@ -6,7 +6,7 @@
                 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd">
 
     <!-- Configuration stored in $OPENNMS_HOME/etc/it.xeniaprogetti.cloudiq.plugin.cfg file -->
-    <cm:property-placeholder id="opennms-cloudiq-pluginPluginProperties" persistent-id="it.xeniaprogetti.cloudiq.plugin" update-strategy="reload">
+    <cm:property-placeholder id="cloudiqPluginProperties" persistent-id="it.xeniaprogetti.cloudiq.plugin" update-strategy="reload">
         <cm:default-properties>
             <cm:property name="url" value="http://127.0.0.1:8888/target" />
             <cm:property name="apiKey" value="TOKEN" />

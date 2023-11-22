@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("opennms-cloudiq-plugin")
+@Path("cloudiq")
 public interface WebhookHandler {
 
     @GET
