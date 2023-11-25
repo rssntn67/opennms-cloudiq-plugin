@@ -3,6 +3,7 @@ package it.xeniaprogetti.cloudiq.plugin;
 import java.util.Objects;
 
 import org.opennms.integration.api.v1.events.EventForwarder;
+import org.opennms.integration.api.v1.model.Severity;
 import org.opennms.integration.api.v1.model.immutables.ImmutableEventParameter;
 import org.opennms.integration.api.v1.model.immutables.ImmutableInMemoryEvent;
 import org.slf4j.Logger;
@@ -17,11 +18,12 @@ public class AlarmForwarder {
     private static final Logger LOG = LoggerFactory.getLogger(AlarmForwarder.class);
 
     private static final String UEI_PREFIX = "uei.opennms.org/cloudiq";
-    private static final String SEND_EVENT_FAILED_UEI = UEI_PREFIX + "/sendEventFailed";
-    private static final String SEND_EVENT_SUCCESSFUL_UEI = UEI_PREFIX + "/sendEventSuccessful";
+    private static final String RAISE_EVENT_UEI = UEI_PREFIX + "/raiseEvent";
+    private static final String CLEAN_EVENT_UEI = UEI_PREFIX + "/cleanEvent";
 
     private final MetricRegistry metrics = new MetricRegistry();
-    private final Meter eventsForwarded = metrics.meter("eventsForwarded");
+    private final Meter raiseEventsForwarded = metrics.meter("raiseEventsForwarded");
+    private final Meter cleanEventsForwarded = metrics.meter("cleanEventsForwarded");
     private final EventForwarder eventForwarder;
 
     public AlarmForwarder(EventForwarder eventForwarder) {
@@ -33,19 +35,41 @@ public class AlarmForwarder {
         // Map the alarm to the corresponding model object that the API requires
         ImmutableInMemoryEvent event = toEvent(alert);
 
-        eventsForwarded.mark();
+        if (event.getSeverity() == Severity.NORMAL)
+            cleanEventsForwarded.mark();
+        else
+            raiseEventsForwarded.mark();
+        LOG.info("Sending event: {} .", event);
         eventForwarder.sendAsync(event);
-        LOG.info("Sending event for alert with reduction-key: {} .", alert);
     }
 
 
 
     public static ImmutableInMemoryEvent toEvent(Alert alert) {
+        if (alert.getStatus() == Alert.Status.OK) {
+            return ImmutableInMemoryEvent.newBuilder()
+                    .setUei(CLEAN_EVENT_UEI)
+                    .setSeverity(Severity.NORMAL)
+                    .setService("CloudIQ")
+                    .setSource("CloudIQPlugin")
+                    .addParameter(ImmutableEventParameter.newBuilder()
+                            .setName("reductionKey")
+                            .setValue("NAZZ")
+                            .build())
+                    .addParameter(ImmutableEventParameter.newBuilder()
+                            .setName("message")
+                            .setValue(alert.getDescription())
+                            .build())
+                    .build();
+        }
         return ImmutableInMemoryEvent.newBuilder()
-                .setUei(SEND_EVENT_FAILED_UEI)
+                .setUei(RAISE_EVENT_UEI)
+                .setSeverity(Severity.CRITICAL)
+                .setService("CloudIQ")
+                .setSource("CloudIQPlugin")
                 .addParameter(ImmutableEventParameter.newBuilder()
                         .setName("reductionKey")
-                        .setValue(alert.getAttributes().get("reductionKey"))
+                        .setValue("azz")
                         .build())
                 .addParameter(ImmutableEventParameter.newBuilder()
                         .setName("message")
