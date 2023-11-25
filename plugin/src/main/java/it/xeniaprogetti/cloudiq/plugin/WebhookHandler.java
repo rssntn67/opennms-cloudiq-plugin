@@ -8,7 +8,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("cloudiq")
+import it.xeniaprogetti.cloudiq.plugin.model.Alert;
+
+@Path("/cloudiq")
 public interface WebhookHandler {
 
     @GET
@@ -19,5 +21,5 @@ public interface WebhookHandler {
     @Path("/hook")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    Response handleWebhook(String body);
+    Response handleWebhook(Alert body);
 }

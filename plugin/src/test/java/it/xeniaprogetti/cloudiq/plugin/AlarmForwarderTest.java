@@ -3,24 +3,26 @@ package it.xeniaprogetti.cloudiq.plugin;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.time.Instant;
+
 import org.junit.Test;
-import org.opennms.integration.api.v1.model.Alarm;
 import org.opennms.integration.api.v1.model.Severity;
-import org.opennms.integration.api.v1.model.immutables.ImmutableAlarm;
+import org.opennms.integration.api.v1.model.immutables.ImmutableInMemoryEvent;
+
 import it.xeniaprogetti.cloudiq.plugin.model.Alert;
 
 public class AlarmForwarderTest {
 
     @Test
     public void canConvertAlarmToAlert() {
-        Alarm alarm = ImmutableAlarm.newBuilder()
-                .setId(1)
-                .setReductionKey("hey:oh")
-                .setSeverity(Severity.CRITICAL)
-                .build();
+        Alert alert = new Alert();
+        alert.setStatus(Alert.Status.CRITICAL);
+        alert.setTimestamp(Instant.ofEpochSecond(1402302570));
+        alert.setDescription("CPU is above upper limit (91%)");
+        alert.setAttribute("my_unique_attribute", "my_unique_value");
 
-        Alert alert = AlarmForwarder.toAlert(alarm);
+        ImmutableInMemoryEvent event = AlarmForwarder.toEvent(alert);
 
-        assertThat(alert.getStatus(), equalTo(Alert.Status.CRITICAL));
+        assertThat(event.getSeverity(), equalTo(Severity.CRITICAL));
     }
 }

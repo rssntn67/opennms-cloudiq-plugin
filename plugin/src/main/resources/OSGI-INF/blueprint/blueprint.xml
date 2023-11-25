@@ -14,19 +14,10 @@
     </cm:property-placeholder>
 
     <!-- Pull in service implementations from the OSGi registry -->
-    <reference id="alarmDao" interface="org.opennms.integration.api.v1.dao.AlarmDao" availability="optional"/>
-    <reference id="edgeDao" interface="org.opennms.integration.api.v1.dao.EdgeDao" availability="optional"/>
     <reference id="eventForwarder" interface="org.opennms.integration.api.v1.events.EventForwarder" availability="optional"/>
-
-    <!-- Build our API client -->
-    <bean id="apiClient" class="it.xeniaprogetti.cloudiq.plugin.ApiClient">
-        <argument value="${url}"/>
-        <argument value="${apiKey}"/>
-    </bean>
 
     <!-- Build our forwarder bean -->
     <bean id="alarmForwarder" class="it.xeniaprogetti.cloudiq.plugin.AlarmForwarder">
-        <argument ref="apiClient"/>
         <argument ref="eventForwarder"/>
     </bean>
     <!-- Expose the forwarder as a AlarmLifecycleListener so we get callbacks -->
@@ -34,17 +25,11 @@
     <!-- Expose the forwarder directly for access from our shell commands -->
     <service interface="it.xeniaprogetti.cloudiq.plugin.AlarmForwarder" ref="alarmForwarder"/>
 
-    <!-- Build our forwarder bean -->
-    <bean id="topologyForwarder" class="it.xeniaprogetti.cloudiq.plugin.TopologyForwarder">
-        <argument ref="apiClient"/>
-        <argument ref="edgeDao"/>
-    </bean>
-    <!-- Expose the forwarder directly for access from our shell commands -->
-    <service interface="it.xeniaprogetti.cloudiq.plugin.TopologyForwarder" ref="topologyForwarder"/>
-
     <!-- Build and expose the JAX-RS annotated webhook handler.
          This will automatically mount the endpoint over the REST API. -->
-    <bean id="webhookHandlerImpl" class="it.xeniaprogetti.cloudiq.plugin.WebhookHandlerImpl" />
+    <bean id="webhookHandlerImpl" class="it.xeniaprogetti.cloudiq.plugin.WebhookHandlerImpl">        <argument ref="eventForwarder"/>
+        <argument ref="alarmForwarder"/>
+    </bean>
     <service interface="it.xeniaprogetti.cloudiq.plugin.WebhookHandler" ref="webhookHandlerImpl">
         <service-properties>
             <entry key="application-path" value="/rest" />

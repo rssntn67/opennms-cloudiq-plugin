@@ -5,8 +5,17 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import it.xeniaprogetti.cloudiq.plugin.model.Alert;
+
 public class WebhookHandlerImpl implements WebhookHandler {
     private static final Logger LOG = LoggerFactory.getLogger(WebhookHandlerImpl.class);
+
+    private final AlarmForwarder forwarder;
+
+    public WebhookHandlerImpl(AlarmForwarder forwarder) {
+        this.forwarder = forwarder;
+    }
+
 
     @Override
     public Response ping() {
@@ -14,8 +23,9 @@ public class WebhookHandlerImpl implements WebhookHandler {
     }
 
     @Override
-    public Response handleWebhook(String body) {
-        LOG.debug("Got payload: {}", body);
+    public Response handleWebhook(Alert body) {
+        LOG.debug("Got Alert: {}", body);
+        forwarder.forward(body);
         return Response.ok().build();
     }
 }
