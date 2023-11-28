@@ -20,8 +20,6 @@
     <bean id="alarmForwarder" class="it.xeniaprogetti.cloudiq.plugin.AlarmForwarder">
         <argument ref="eventForwarder"/>
     </bean>
-    <!-- Expose the forwarder as a AlarmLifecycleListener so we get callbacks -->
-    <service interface="org.opennms.integration.api.v1.alarms.AlarmLifecycleListener" ref="alarmForwarder"/>
     <!-- Expose the forwarder directly for access from our shell commands -->
     <service interface="it.xeniaprogetti.cloudiq.plugin.AlarmForwarder" ref="alarmForwarder"/>
 
