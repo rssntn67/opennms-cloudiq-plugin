@@ -33,9 +33,9 @@ public class Alert {
     @JsonProperty("current_score")
     private Integer currentScore;
     @JsonProperty("new_issues")
-    private List<NewIssue> newIssues;
+    private List<Issue> newIssues;
     @JsonProperty("resolved_issues")
-    private List<ResolvedIssue> resolvedIssues;
+    private List<Issue> resolvedIssues;
 
     @JsonProperty("system_display_identifier")
     public String getSystemDisplayIdentifier() {
@@ -98,22 +98,22 @@ public class Alert {
     }
 
     @JsonProperty("new_issues")
-    public List<NewIssue> getNewIssues() {
+    public List<Issue> getNewIssues() {
         return newIssues;
     }
 
     @JsonProperty("new_issues")
-    public void setNewIssues(List<NewIssue> newIssues) {
+    public void setNewIssues(List<Issue> newIssues) {
         this.newIssues = newIssues;
     }
 
     @JsonProperty("resolved_issues")
-    public List<ResolvedIssue> getResolvedIssues() {
+    public List<Issue> getResolvedIssues() {
         return resolvedIssues;
     }
 
     @JsonProperty("resolved_issues")
-    public void setResolvedIssues(List<ResolvedIssue> resolvedIssues) {
+    public void setResolvedIssues(List<Issue> resolvedIssues) {
         this.resolvedIssues = resolvedIssues;
     }
 

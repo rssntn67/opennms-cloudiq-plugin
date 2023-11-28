@@ -17,7 +17,7 @@ public class ImpactedObject {
     @JsonProperty("object_native_id")
     private String objectNativeId;
     @JsonProperty("object_name")
-    private Object objectName;
+    private String objectName;
     @JsonProperty("object_id")
     private String objectId;
     @JsonProperty("object_native_type")
@@ -34,12 +34,12 @@ public class ImpactedObject {
     }
 
     @JsonProperty("object_name")
-    public Object getObjectName() {
+    public String getObjectName() {
         return objectName;
     }
 
     @JsonProperty("object_name")
-    public void setObjectName(Object objectName) {
+    public void setObjectName(String objectName) {
         this.objectName = objectName;
     }
 

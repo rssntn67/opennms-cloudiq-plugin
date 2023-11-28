@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "category",
     "impacted_objects"
 })
-public class ResolvedIssue {
+public class Issue {
 
     @JsonProperty("id")
     private String id;
@@ -33,6 +33,7 @@ public class ResolvedIssue {
     private String category;
     @JsonProperty("impacted_objects")
     private List<ImpactedObject> impactedObjects;
+
     @JsonProperty("id")
     public String getId() {
         return id;
