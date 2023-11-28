@@ -1,128 +1,120 @@
+
 package it.xeniaprogetti.cloudiq.plugin.model;
 
-import java.io.IOException;
-import java.time.Instant;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.NONE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "system_display_identifier",
+    "system_name",
+    "system_model",
+    "timestamp",
+    "timestamp_iso8601",
+    "current_score",
+    "new_issues",
+    "resolved_issues"
+})
 public class Alert {
 
-    @JsonProperty("status")
-    @JsonSerialize(using = Status.Serializer.class)
-    private Status status;
+    @JsonProperty("system_display_identifier")
+    private String systemDisplayIdentifier;
+    @JsonProperty("system_name")
+    private String systemName;
+    @JsonProperty("system_model")
+    private String systemModel;
+    @JsonProperty("timestamp")
+    private Long timestamp;
+    @JsonProperty("timestamp_iso8601")
+    private String timestampIso8601;
+    @JsonProperty("current_score")
+    private Integer currentScore;
+    @JsonProperty("new_issues")
+    private List<Object> newIssues;
+    @JsonProperty("resolved_issues")
+    private List<ResolvedIssue> resolvedIssues;
+
+    @JsonProperty("system_display_identifier")
+    public String getSystemDisplayIdentifier() {
+        return systemDisplayIdentifier;
+    }
+
+    @JsonProperty("system_display_identifier")
+    public void setSystemDisplayIdentifier(String systemDisplayIdentifier) {
+        this.systemDisplayIdentifier = systemDisplayIdentifier;
+    }
+
+    @JsonProperty("system_name")
+    public String getSystemName() {
+        return systemName;
+    }
+
+    @JsonProperty("system_name")
+    public void setSystemName(String systemName) {
+        this.systemName = systemName;
+    }
+
+    @JsonProperty("system_model")
+    public String getSystemModel() {
+        return systemModel;
+    }
+
+    @JsonProperty("system_model")
+    public void setSystemModel(String systemModel) {
+        this.systemModel = systemModel;
+    }
 
     @JsonProperty("timestamp")
-    @JsonSerialize(using = InstantSerializer.class)
-    private Instant timestamp;
-
-    @JsonProperty("description")
-    private String description;
-
-    private Map<String,String> attributes = new LinkedHashMap<>();
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Instant getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Instant timestamp) {
+    @JsonProperty("timestamp")
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public String getDescription() {
-        return description;
+    @JsonProperty("timestamp_iso8601")
+    public String getTimestampIso8601() {
+        return timestampIso8601;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    @JsonProperty("timestamp_iso8601")
+    public void setTimestampIso8601(String timestampIso8601) {
+        this.timestampIso8601 = timestampIso8601;
     }
 
-    @JsonAnyGetter
-    public Map<String, String> getAttributes() {
-        return attributes;
+    @JsonProperty("current_score")
+    public Integer getCurrentScore() {
+        return currentScore;
     }
 
-    @JsonAnySetter
-    public void setAttribute(String name, String value) {
-        attributes.put(name, value);
+    @JsonProperty("current_score")
+    public void setCurrentScore(Integer currentScore) {
+        this.currentScore = currentScore;
     }
 
-    public void setAttributes(Map<String, String> attributes) {
-        this.attributes = attributes;
+    @JsonProperty("new_issues")
+    public List<Object> getNewIssues() {
+        return newIssues;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Alert alert = (Alert) o;
-        return Objects.equals(status, alert.status) &&
-                Objects.equals(timestamp, alert.timestamp) &&
-                Objects.equals(description, alert.description) &&
-                Objects.equals(attributes, alert.attributes);
+    @JsonProperty("new_issues")
+    public void setNewIssues(List<Object> newIssues) {
+        this.newIssues = newIssues;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(status, timestamp, description, attributes);
+    @JsonProperty("resolved_issues")
+    public List<ResolvedIssue> getResolvedIssues() {
+        return resolvedIssues;
     }
 
-    @Override
-    public String toString() {
-        return "Alert{" +
-                "status='" + status + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                ", description='" + description + '\'' +
-                ", attributes=" + attributes +
-                '}';
+    @JsonProperty("resolved_issues")
+    public void setResolvedIssues(List<ResolvedIssue> resolvedIssues) {
+        this.resolvedIssues = resolvedIssues;
     }
 
-    public enum Status {
-        OK,
-        CRITICAL,
-        WARNING,
-        ACKNOWLEDGED;
-
-        public static class Serializer extends StdSerializer<Status> {
-            protected Serializer() {
-                super(Status.class);
-            }
-
-            @Override
-            public void serialize(Status status, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-                jsonGenerator.writeString(status.name().toLowerCase());
-            }
-        }
-    }
-
-    public static class InstantSerializer extends StdSerializer<Instant> {
-        protected InstantSerializer() {
-            super(Instant.class);
-        }
-
-        @Override
-        public void serialize(Instant instant, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-            jsonGenerator.writeNumber(instant.getEpochSecond());
-        }
-    }
 }
