@@ -15,10 +15,12 @@
 
     <!-- Pull in service implementations from the OSGi registry -->
     <reference id="eventForwarder" interface="org.opennms.integration.api.v1.events.EventForwarder" availability="optional"/>
+    <reference id="nodeDao" interface="org.opennms.integration.api.v1.dao.NodeDao" availability="optional"/>
 
     <!-- Build our forwarder bean -->
     <bean id="cloudIqEventForwarder" class="it.xeniaprogetti.cloudiq.plugin.CloudIqEventForwarder">
         <argument ref="eventForwarder"/>
+        <argument ref="nodeDao"/>
     </bean>
     <!-- Expose the cloud iq event forwarder directly for access from our shell commands -->
     <service interface="it.xeniaprogetti.cloudiq.plugin.CloudIqEventForwarder" ref="cloudIqEventForwarder"/>

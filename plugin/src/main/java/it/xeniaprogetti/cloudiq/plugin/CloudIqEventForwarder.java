@@ -1,9 +1,18 @@
 package it.xeniaprogetti.cloudiq.plugin;
 
+import java.net.InetAddress;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
+import org.opennms.integration.api.v1.dao.NodeDao;
 import org.opennms.integration.api.v1.events.EventForwarder;
+import org.opennms.integration.api.v1.model.IpInterface;
+import org.opennms.integration.api.v1.model.MetaData;
+import org.opennms.integration.api.v1.model.Node;
+import org.opennms.integration.api.v1.model.NodeAssetRecord;
 import org.opennms.integration.api.v1.model.Severity;
+import org.opennms.integration.api.v1.model.SnmpInterface;
 import org.opennms.integration.api.v1.model.immutables.ImmutableEventParameter;
 import org.opennms.integration.api.v1.model.immutables.ImmutableInMemoryEvent;
 import org.slf4j.Logger;
@@ -26,12 +35,19 @@ public class CloudIqEventForwarder {
     private final Meter cleanEventsForwarded = metrics.meter("cleanEventsForwarded");
     private final EventForwarder eventForwarder;
 
-    public CloudIqEventForwarder(EventForwarder eventForwarder) {
+    private final NodeDao nodeDao;
+
+    public CloudIqEventForwarder(EventForwarder eventForwarder, NodeDao nodeDao) {
         this.eventForwarder = Objects.requireNonNull(eventForwarder);
+        this.nodeDao = Objects.requireNonNull(nodeDao);
     }
 
     public void forward(Alert alert) {
 
+        Node node = nodeDao.getNodeByLabel(alert.getSystemName());
+        if (node == null) {
+            node = getNodeByAlert(alert);
+        }
         // Map the alarm to the corresponding model object that the API requires
         ImmutableInMemoryEvent event = toEvent(alert);
 
@@ -43,6 +59,9 @@ public class CloudIqEventForwarder {
         eventForwarder.sendAsync(event);
     }
 
+    private Node getNodeByAlert(Alert alert) {
+        throw new UnsupportedOperationException();
+    }
 
 
     public static ImmutableInMemoryEvent toEvent(Alert alert) {
@@ -53,6 +72,7 @@ public class CloudIqEventForwarder {
                     .setSeverity(Severity.NORMAL)
                     .setService("CloudIQ")
                     .setSource("CloudIQPlugin")
+                    .setNodeId(1)
                     .addParameter(ImmutableEventParameter.newBuilder()
                             .setName("reductionKey")
                             .setValue("NAZZ")
@@ -65,6 +85,7 @@ public class CloudIqEventForwarder {
         return ImmutableInMemoryEvent.newBuilder()
                 .setUei(RAISE_EVENT_UEI)
                 .setSeverity(Severity.CRITICAL)
+                .setNodeId(1)
                 .setService("CloudIQ")
                 .setSource("CloudIQPlugin")
                 .addParameter(ImmutableEventParameter.newBuilder()
