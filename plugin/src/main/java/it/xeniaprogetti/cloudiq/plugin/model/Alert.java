@@ -33,7 +33,7 @@ public class Alert {
     @JsonProperty("current_score")
     private Integer currentScore;
     @JsonProperty("new_issues")
-    private List<Object> newIssues;
+    private List<NewIssue> newIssues;
     @JsonProperty("resolved_issues")
     private List<ResolvedIssue> resolvedIssues;
 
@@ -98,12 +98,12 @@ public class Alert {
     }
 
     @JsonProperty("new_issues")
-    public List<Object> getNewIssues() {
+    public List<NewIssue> getNewIssues() {
         return newIssues;
     }
 
     @JsonProperty("new_issues")
-    public void setNewIssues(List<Object> newIssues) {
+    public void setNewIssues(List<NewIssue> newIssues) {
         this.newIssues = newIssues;
     }
 

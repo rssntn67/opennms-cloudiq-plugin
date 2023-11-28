@@ -46,7 +46,8 @@ public class CloudIqEventForwarder {
 
 
     public static ImmutableInMemoryEvent toEvent(Alert alert) {
-        if (alert.getStatus() == Alert.Status.OK) {
+        if (alert.getNewIssues() == null || alert.getNewIssues().isEmpty()) {
+
             return ImmutableInMemoryEvent.newBuilder()
                     .setUei(CLEAN_EVENT_UEI)
                     .setSeverity(Severity.NORMAL)
@@ -58,7 +59,6 @@ public class CloudIqEventForwarder {
                             .build())
                     .addParameter(ImmutableEventParameter.newBuilder()
                             .setName("message")
-                            .setValue(alert.getDescription())
                             .build())
                     .build();
         }
@@ -73,7 +73,6 @@ public class CloudIqEventForwarder {
                         .build())
                 .addParameter(ImmutableEventParameter.newBuilder()
                         .setName("message")
-                        .setValue(alert.getDescription())
                         .build())
                 .build();
     }
