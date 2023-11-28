@@ -5,18 +5,11 @@
         <feature dependency="true">aries-blueprint</feature>
         <feature dependency="true">shell</feature>
         <feature version="${opennms.api.version}" dependency="true">opennms-integration-api</feature>
-        <feature version="${okhttp.version}" dependency="true">okhttp</feature>
         <feature version="${jackson.version}" dependency="true">jackson</feature>
         <bundle dependency="true">mvn:org.apache.commons/commons-jexl3/${jexl.version}</bundle>
         <bundle dependency="true">mvn:io.dropwizard.metrics/metrics-core/${metrics.version}</bundle>
         <bundle dependency="true">mvn:javax.ws.rs/javax.ws.rs-api/2.1.1</bundle>
         <bundle>mvn:it.xeniaprogetti/cloudiq-plugin/${project.version}</bundle>
-    </feature>
-
-    <feature name="okhttp" description="okhttp" version="${okhttp.version}">
-        <bundle dependency="true">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.okio/${okio.bundle.version}</bundle>
-        <bundle dependency="true">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.okhttp/${okhttp.bundle.version}</bundle>
-        <bundle dependency="true">wrap:mvn:com.squareup.okhttp3/logging-interceptor/${okhttp.version}</bundle>
     </feature>
 
     <feature name="jackson" description="jackson" version="${jackson.version}">

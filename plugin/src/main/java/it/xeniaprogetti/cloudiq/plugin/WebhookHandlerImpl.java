@@ -10,9 +10,9 @@ import it.xeniaprogetti.cloudiq.plugin.model.Alert;
 public class WebhookHandlerImpl implements WebhookHandler {
     private static final Logger LOG = LoggerFactory.getLogger(WebhookHandlerImpl.class);
 
-    private final AlarmForwarder forwarder;
+    private final CloudIqEventForwarder forwarder;
 
-    public WebhookHandlerImpl(AlarmForwarder forwarder) {
+    public WebhookHandlerImpl(CloudIqEventForwarder forwarder) {
         this.forwarder = forwarder;
     }
 

@@ -17,16 +17,16 @@
     <reference id="eventForwarder" interface="org.opennms.integration.api.v1.events.EventForwarder" availability="optional"/>
 
     <!-- Build our forwarder bean -->
-    <bean id="alarmForwarder" class="it.xeniaprogetti.cloudiq.plugin.AlarmForwarder">
+    <bean id="cloudIqEventForwarder" class="it.xeniaprogetti.cloudiq.plugin.CloudIqEventForwarder">
         <argument ref="eventForwarder"/>
     </bean>
-    <!-- Expose the forwarder directly for access from our shell commands -->
-    <service interface="it.xeniaprogetti.cloudiq.plugin.AlarmForwarder" ref="alarmForwarder"/>
+    <!-- Expose the cloud iq event forwarder directly for access from our shell commands -->
+    <service interface="it.xeniaprogetti.cloudiq.plugin.CloudIqEventForwarder" ref="cloudIqEventForwarder"/>
 
     <!-- Build and expose the JAX-RS annotated webhook handler.
          This will automatically mount the endpoint over the REST API. -->
-    <bean id="webhookHandlerImpl" class="it.xeniaprogetti.cloudiq.plugin.WebhookHandlerImpl">        <argument ref="eventForwarder"/>
-        <argument ref="alarmForwarder"/>
+    <bean id="webhookHandlerImpl" class="it.xeniaprogetti.cloudiq.plugin.WebhookHandlerImpl">
+        <argument ref="cloudIqEventForwarder"/>
     </bean>
     <service interface="it.xeniaprogetti.cloudiq.plugin.WebhookHandler" ref="webhookHandlerImpl">
         <service-properties>

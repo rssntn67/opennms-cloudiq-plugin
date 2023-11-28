@@ -14,8 +14,8 @@ import com.codahale.metrics.MetricRegistry;
 
 import it.xeniaprogetti.cloudiq.plugin.model.Alert;
 
-public class AlarmForwarder {
-    private static final Logger LOG = LoggerFactory.getLogger(AlarmForwarder.class);
+public class CloudIqEventForwarder {
+    private static final Logger LOG = LoggerFactory.getLogger(CloudIqEventForwarder.class);
 
     private static final String UEI_PREFIX = "uei.opennms.org/cloudiq";
     private static final String RAISE_EVENT_UEI = UEI_PREFIX + "/raiseEvent";
@@ -26,7 +26,7 @@ public class AlarmForwarder {
     private final Meter cleanEventsForwarded = metrics.meter("cleanEventsForwarded");
     private final EventForwarder eventForwarder;
 
-    public AlarmForwarder(EventForwarder eventForwarder) {
+    public CloudIqEventForwarder(EventForwarder eventForwarder) {
         this.eventForwarder = Objects.requireNonNull(eventForwarder);
     }
 

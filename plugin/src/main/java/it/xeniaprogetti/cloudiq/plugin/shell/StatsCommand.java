@@ -6,7 +6,7 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import it.xeniaprogetti.cloudiq.plugin.AlarmForwarder;
+import it.xeniaprogetti.cloudiq.plugin.CloudIqEventForwarder;
 
 import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricRegistry;
@@ -16,7 +16,7 @@ import com.codahale.metrics.MetricRegistry;
 public class StatsCommand implements Action {
 
     @Reference
-    private AlarmForwarder forwarder;
+    private CloudIqEventForwarder forwarder;
 
     @Override
     public Object execute() {

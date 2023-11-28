@@ -21,7 +21,7 @@ public class AlarmForwarderTest {
         alert.setDescription("CPU is above upper limit (91%)");
         alert.setAttribute("my_unique_attribute", "my_unique_value");
 
-        ImmutableInMemoryEvent event = AlarmForwarder.toEvent(alert);
+        ImmutableInMemoryEvent event = CloudIqEventForwarder.toEvent(alert);
 
         assertThat(event.getSeverity(), equalTo(Severity.CRITICAL));
     }
