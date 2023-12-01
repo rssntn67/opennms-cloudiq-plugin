@@ -5,8 +5,8 @@
         <descr>Successfully sent event via REST API for alarm with reduction key: %parm[reductionKey]%</descr>
         <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Successfully sent event for alarm: %parm[reductionKey]%</logmsg>
         <severity>Normal</severity>
-        <alarm-data reduction-key="%uei%:%parm[reductionKey]%" alarm-type="2"
-                    clear-key="uei.opennms.org/cloudiq/raiseEvent:%parm[reductionKey]%"/>
+        <alarm-data reduction-key="%parm[id]%" alarm-type="2"
+                    clear-key="%parm[id]%"/>
     </event>
     <event>
         <uei>uei.opennms.org/cloudiq/raiseEvent</uei>
@@ -14,6 +14,6 @@
         <descr>Failed to sent event via REST API for alarm with reduction key: %parm[reductionKey]%. Message is: %parm[message]%</descr>
         <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Failed to sent event for alarm: %parm[reductionKey]%</logmsg>
         <severity>Critical</severity>
-        <alarm-data reduction-key="%uei%:%parm[reductionKey]%" alarm-type="1" />
+        <alarm-data reduction-key="%parm[id]%" alarm-type="1" />
     </event>
 </events>
