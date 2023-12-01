@@ -1,18 +1,13 @@
 package it.xeniaprogetti.cloudiq.plugin;
 
-import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.opennms.integration.api.v1.dao.NodeDao;
 import org.opennms.integration.api.v1.events.EventForwarder;
-import org.opennms.integration.api.v1.model.IpInterface;
-import org.opennms.integration.api.v1.model.MetaData;
 import org.opennms.integration.api.v1.model.Node;
-import org.opennms.integration.api.v1.model.NodeAssetRecord;
 import org.opennms.integration.api.v1.model.Severity;
-import org.opennms.integration.api.v1.model.SnmpInterface;
 import org.opennms.integration.api.v1.model.immutables.ImmutableEventParameter;
 import org.opennms.integration.api.v1.model.immutables.ImmutableInMemoryEvent;
 import org.slf4j.Logger;
@@ -48,26 +43,26 @@ public class CloudIqEventForwarder {
 
         Node node = nodeDao.getNodeByLabel(alert.getSystemName());
         if (node == null) {
-            node = getNodeByAlert(alert);
+            LOG.info("forward: no node id found for alert {}", alert);
+            return;
         }
         // Map the alarm to the corresponding model object that the API requires
-        ImmutableInMemoryEvent event = toEvent(alert,node);
+        toEvent(alert,node).forEach( event -> {
+            if (event.getSeverity() == Severity.NORMAL)
+                cleanEventsForwarded.mark();
+            else
+                raiseEventsForwarded.mark();
+            LOG.info("Sending event: {} .", event);
+            eventForwarder.sendAsync(event);
 
-        if (event.getSeverity() == Severity.NORMAL)
-            cleanEventsForwarded.mark();
-        else
-            raiseEventsForwarded.mark();
-        LOG.info("Sending event: {} .", event);
-        eventForwarder.sendAsync(event);
+        });
+
     }
 
-    private Node getNodeByAlert(Alert alert) {
-        throw new UnsupportedOperationException();
-    }
+    public static List<ImmutableInMemoryEvent> toEvent(Alert alert,Node nd) {
 
-
-    public static ImmutableInMemoryEvent toEvent(Alert alert,Node nd) {
         ImmutableInMemoryEvent.Builder IME= ImmutableInMemoryEvent.newBuilder();
+        List<ImmutableInMemoryEvent> eventList = new ArrayList<>();
         
         if (alert.getNewIssues() == null || alert.getNewIssues().isEmpty()) {            
 
@@ -110,92 +105,53 @@ public class CloudIqEventForwarder {
                     IME.addParameter(ImmutableEventParameter.newBuilder()
                           .setName("object_native_type").setValue(iobj.getObjectNativeType()).build());                    
                 }
-            }
 
-            /*
-            return ImmutableInMemoryEvent.newBuilder()
-                    .setUei(CLEAN_EVENT_UEI)
-                    .setSeverity(Severity.NORMAL)
-                    .setService("CloudIQ")
-                    .setSource("CloudIQPlugin")
-                    .setNodeId(nd.getId())
-                    .addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("SystemName")
-                            .setValue(alert.getSystemName())
-                            .build())
-                    .addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("SystemModel")
-                            .setValue(alert.getSystemModel())
-                            .build())
-                    .addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("TimestampIso8601")
-                            .setValue(alert.getTimestampIso8601().toString())
-                            .build())                   
-                    .addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("current_score")
-                            .setValue(alert.getCurrentScore().toString())
-                            .build())                                       
-                    .build();
-                    */
-            return IME.build();
-        }
+                eventList.add(IME.build());
+            } //END FOR
+        } else {//END IF
             IME.setUei(RAISE_EVENT_UEI);
             IME.setSeverity(Severity.CRITICAL);
             IME.setService("CloudIQ");
             IME.setSource("CloudIQPlugin");
             IME.setNodeId(nd.getId());
             IME.addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("SystemName").setValue(alert.getSystemName()).build());
+                    .setName("SystemName").setValue(alert.getSystemName()).build());
             IME.addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("SystemModel").setValue(alert.getSystemModel()).build());
+                    .setName("SystemModel").setValue(alert.getSystemModel()).build());
             IME.addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("TimestampIso8601").setValue(alert.getTimestampIso8601()).build());
+                    .setName("TimestampIso8601").setValue(alert.getTimestampIso8601()).build());
             IME.addParameter(ImmutableEventParameter.newBuilder()
-                            .setName("current_score").setValue(alert.getCurrentScore().toString()).build());
+                    .setName("current_score").setValue(alert.getCurrentScore().toString()).build());
             //Issue
             for (Issue ise : alert.getNewIssues()) {
- 
+
                 IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("id").setValue(ise.getId()).build());
+                        .setName("id").setValue(ise.getId()).build());
                 IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("impact").setValue(ise.getImpact().toString()).build());                
+                        .setName("impact").setValue(ise.getImpact().toString()).build());
                 IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("description").setValue(ise.getDescription()).build());
+                        .setName("description").setValue(ise.getDescription()).build());
                 IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("resolution").setValue(ise.getResolution()).build());
+                        .setName("resolution").setValue(ise.getResolution()).build());
                 IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("rule_id").setValue(ise.getRuleId()).build());                
+                        .setName("rule_id").setValue(ise.getRuleId()).build());
                 IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("category").setValue(ise.getCategory()).build());                
+                        .setName("category").setValue(ise.getCategory()).build());
                 //ImpactedObject
                 for (ImpactedObject iobj : ise.getImpactedObjects()) {
                     IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("object_native_id").setValue(iobj.getObjectNativeId()).build());
+                            .setName("object_native_id").setValue(iobj.getObjectNativeId()).build());
                     IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("object_name").setValue(iobj.getObjectName()).build());
+                            .setName("object_name").setValue(iobj.getObjectName()).build());
                     IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("object_id").setValue(iobj.getObjectId()).build());
+                            .setName("object_id").setValue(iobj.getObjectId()).build());
                     IME.addParameter(ImmutableEventParameter.newBuilder()
-                          .setName("object_native_type").setValue(iobj.getObjectNativeType()).build());                    
+                            .setName("object_native_type").setValue(iobj.getObjectNativeType()).build());
                 }
+                eventList.add(IME.build());
             }
-        /*
-        return ImmutableInMemoryEvent.newBuilder()
-                .setUei(RAISE_EVENT_UEI)
-                .setSeverity(Severity.CRITICAL)
-                .setNodeId(1)
-                .setService("CloudIQ")
-                .setSource("CloudIQPlugin")
-                .addParameter(ImmutableEventParameter.newBuilder()
-                        .setName("reductionKey")
-                        .setValue("azz")
-                        .build())
-                .addParameter(ImmutableEventParameter.newBuilder()
-                        .setName("message")
-                        .build())
-                .build();
-        */
-        return IME.build();
+        }
+        return eventList;
     }
 
     public MetricRegistry getMetrics() {

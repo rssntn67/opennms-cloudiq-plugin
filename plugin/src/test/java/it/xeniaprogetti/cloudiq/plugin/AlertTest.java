@@ -11,7 +11,9 @@ import it.xeniaprogetti.cloudiq.plugin.model.Issue;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class AlertTest {
 
@@ -39,7 +41,7 @@ public class AlertTest {
         alert.setNewIssues(new ArrayList<>());
         alert.setResolvedIssues(new ArrayList<>());
         alert.getNewIssues().add(issue);
-
+        mapper.configure(SerializationFeature.EAGER_SERIALIZER_FETCH, false);
 
         String expectedJson = "{\n" +
                 "  \"system_display_identifier\": \"APM00000000000\",\n" +
