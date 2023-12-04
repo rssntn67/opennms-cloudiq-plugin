@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>opennms-cloudiq-plugin</artifactId>
     <groupId>it.xeniaprogetti</groupId>
-    <name>OpenNMS :: Plugins :: OpenNMS CloudIQ Plugin :: Parent</name>
+    <name>OpenNMS :: Plugins :: CloudIQ Plugin :: Parent</name>
     <packaging>pom</packaging>
 
     <properties>

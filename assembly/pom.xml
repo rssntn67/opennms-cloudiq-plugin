@@ -15,7 +15,7 @@
       
   <artifactId>assembly</artifactId>
       
-  <name>OpenNMS :: Plugins :: OpenNMS CloudIQ Plugin :: Assembly</name>
+  <name>OpenNMS :: Plugins :: CloudIQ Plugin :: Assembly</name>
       
   <packaging>pom</packaging>
   
