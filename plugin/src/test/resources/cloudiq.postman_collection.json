@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "d2ca2067-1756-49fe-bf69-f364742ce3ff",
+		"name": "cloudiq",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11964192"
+	},
+	"item": [
+		{
+			"name": "ping",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "sendRaiseEvent",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"system_display_identifier\": \"APM00000000000\",\n\t\"system_name\": \"APM00000000000\",\n\t\"system_model\": \"Unity 400\",\n\t\"timestamp\": 1618325841541,\n\t\"timestamp_iso8601\": \"2021-04-13T14:57Z\",\n\t\"current_score\": 70,\n\t\"new_issues\": [\n\t\t{\n\t\t\t\"id\": \"6F17B328DA7D421207DB648C8A154B6130E32F7155B55F46D5A5312938D65B76\",\n\t\t\t\"impact\": -10,\n\t\t\t\"description\": \"Host 'test-host1' does not have connectivity to either SP.\",\n\t\t\t\"resolution\": \"This host is disconnected from both SPA and SPB. Review your connectivity to ensure that all hosts have a connection to both SPs. Health checks for this host can be paused under Admin -> Customization.\",\n\t\t\t\"rule_id\": \"UNITY_HOST_DISCONNECTED_RULE\",\n\t\t\t\"category\": \"CONFIGURATION\",\n\t\t\t\"impacted_objects\": [\n\t\t\t\t{\n\t\t\t\t\t\"object_native_id\": \"Host_49\",\n\t\t\t\t\t\"object_name\": null,\n\t\t\t\t\t\"object_id\": \"APM00000000000__HOST__Host_49\",\n\t\t\t\t\t\"object_native_type\": \"HOST\"\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t],\n\t\"resolved_issues\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8980/opennms/rest/cloudiq/hook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8980",
+					"path": [
+						"opennms",
+						"rest",
+						"cloudiq",
+						"hook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sendClearEvent",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"system_display_identifier\": \"APM00000000000\",\n\t\"system_name\": \"APM00000000000\",\n\t\"system_model\": \"Unity 400\",\n\t\"timestamp\": 1618327944699,\n\t\"timestamp_iso8601\": \"2021-04-13T15:32Z\",\n\t\"current_score\": 70,\n\t\"new_issues\": [],\n\t\"resolved_issues\": [\n\t\t{\n\t\t\t\"id\": \"6F17B328DA7D421207DB648C8A154B6130E32F7155B55F46D5A5312938D65B76\",\n\t\t\t\"impact\": -10,\n\t\t\t\"description\": \"Host 'test-host1' does not have connectivity to either SP.\",\n\t\t\t\"resolution\": \"This host is disconnected from both SPA and SPB. Review your connectivity to ensure that all hosts have a connection to both SPs. Health checks for this host can be paused under Admin -> Customization.\",\n\t\t\t\"rule_id\": \"UNITY_HOST_DISCONNECTED_RULE\",\n\t\t\t\"category\": \"CONFIGURATION\",\n\t\t\t\"impacted_objects\": [\n\t\t\t\t{\n\t\t\t\t\t\"object_native_id\": \"Host_49\",\n\t\t\t\t\t\"object_name\": null,\n\t\t\t\t\t\"object_id\": \"APM00000000000__HOST__Host_49\",\n\t\t\t\t\t\"object_native_type\": \"HOST\"\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8980/opennms/rest/cloudiq/hook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8980",
+					"path": [
+						"opennms",
+						"rest",
+						"cloudiq",
+						"hook"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
