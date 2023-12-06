@@ -2,17 +2,16 @@
     <event>
         <uei>uei.opennms.org/cloudiq/clearEvent</uei>
         <event-label>OpenNMS CloudIQ Plugin: Clear event</event-label>
-        <descr>Successfully sent event via REST API for alarm with reduction key: %parm[reductionKey]%</descr>
-        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Successfully sent event for alarm: %parm[reductionKey]%</logmsg>
+        <descr>Clear Event: %parm[all]%</descr>
+        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Clear Event: %parm[id]% system %parm[system_name]%</logmsg>
         <severity>Normal</severity>
-        <alarm-data reduction-key="%parm[id]%" alarm-type="2"
-                    clear-key="%parm[id]%"/>
+        <alarm-data reduction-key="%parm[id]%" alarm-type="2" clear-key="%parm[id]%"/>
     </event>
     <event>
         <uei>uei.opennms.org/cloudiq/raiseEvent</uei>
         <event-label>OpenNMS CloudIQ Plugin: Raise event</event-label>
-        <descr>Failed to sent event via REST API for alarm with reduction key: %parm[reductionKey]%. Message is: %parm[message]%</descr>
-        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Failed to sent event for alarm: %parm[reductionKey]%</logmsg>
+        <descr>Raise Event: %parm[all]%</descr>
+        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Raise Event: %parm[id]% system %parm[system_name]%</logmsg>
         <severity>Critical</severity>
         <alarm-data reduction-key="%parm[id]%" alarm-type="1" />
     </event>
