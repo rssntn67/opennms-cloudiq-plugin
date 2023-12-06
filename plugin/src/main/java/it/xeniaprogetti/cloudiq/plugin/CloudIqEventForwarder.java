@@ -25,7 +25,7 @@ public class CloudIqEventForwarder {
 
     private static final String UEI_PREFIX = "uei.opennms.org/cloudiq";
     private static final String RAISE_EVENT_UEI = UEI_PREFIX + "/raiseEvent";
-    private static final String CLEAN_EVENT_UEI = UEI_PREFIX + "/cleanEvent";
+    private static final String CLEAR_EVENT_UEI = UEI_PREFIX + "/clearEvent";
 
     private final MetricRegistry metrics = new MetricRegistry();
     private final Meter raiseEventsForwarded = metrics.meter("raiseEventsForwarded");
@@ -99,6 +99,7 @@ public class CloudIqEventForwarder {
                     .setName("object_id_"+i).setValue(iobj.getObjectId()).build());
             eventBuilder.addParameter(ImmutableEventParameter.newBuilder()
                     .setName("object_native_type_"+i).setValue(iobj.getObjectNativeType()).build());
+            i++;
         }
     }
     public static List<ImmutableInMemoryEvent> toEvent(Alert alert,Node node) {
@@ -107,7 +108,7 @@ public class CloudIqEventForwarder {
 
         for (Issue issue : alert.getResolvedIssues()) {
             ImmutableInMemoryEvent.Builder eventBuilder = eventBuilder(alert, node);
-            eventBuilder.setUei(CLEAN_EVENT_UEI);
+            eventBuilder.setUei(CLEAR_EVENT_UEI);
             eventBuilder.setSeverity(Severity.NORMAL);
             build(eventBuilder, issue);
             eventList.add(eventBuilder.build());

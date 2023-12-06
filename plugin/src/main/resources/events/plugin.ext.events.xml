@@ -3,16 +3,16 @@
         <uei>uei.opennms.org/cloudiq/clearEvent</uei>
         <event-label>OpenNMS CloudIQ Plugin: Clear event</event-label>
         <descr>Clear Event: %parm[all]%</descr>
-        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Clear Event: %parm[id]% system %parm[system_name]%</logmsg>
+        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Clear Event: %parm[SystemName]% %parm[description]%</logmsg>
         <severity>Normal</severity>
-        <alarm-data reduction-key="%parm[id]%" alarm-type="2" clear-key="%parm[id]%"/>
+        <alarm-data reduction-key="uei.opennms.org/cloudiq/clearEvent:%parm[id]%" alarm-type="2" clear-key="uei.opennms.org/cloudiq/raiseEvent:%parm[id]%"/>
     </event>
     <event>
         <uei>uei.opennms.org/cloudiq/raiseEvent</uei>
         <event-label>OpenNMS CloudIQ Plugin: Raise event</event-label>
         <descr>Raise Event: %parm[all]%</descr>
-        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Raise Event: %parm[id]% system %parm[system_name]%</logmsg>
+        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Raise Event: %parm[SystemName]% %parm[description]%</logmsg>
         <severity>Critical</severity>
-        <alarm-data reduction-key="%parm[id]%" alarm-type="1" />
+        <alarm-data reduction-key="%uei%:%parm[id]%" alarm-type="1" />
     </event>
 </events>
