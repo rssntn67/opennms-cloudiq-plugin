@@ -41,7 +41,6 @@ public class AlertTest {
         alert.setNewIssues(new ArrayList<>());
         alert.setResolvedIssues(new ArrayList<>());
         alert.getNewIssues().add(issue);
-        mapper.configure(SerializationFeature.EAGER_SERIALIZER_FETCH, false);
 
         String expectedJson = "{\n" +
                 "  \"system_display_identifier\": \"APM00000000000\",\n" +
@@ -70,6 +69,8 @@ public class AlertTest {
                 "  ],\n" +
                 "  \"resolved_issues\": []\n" +
                 "}";
+        mapper.configure(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL, false);
+
         JSONAssert.assertEquals(expectedJson, mapper.writeValueAsString(alert), false);
     }
 
