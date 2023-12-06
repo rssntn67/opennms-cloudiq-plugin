@@ -3,7 +3,6 @@ package it.xeniaprogetti.cloudiq.plugin.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -116,4 +115,17 @@ public class Alert {
         this.resolvedIssues = resolvedIssues;
     }
 
+    @Override
+    public String toString() {
+        return "Alert{" +
+                "systemDisplayIdentifier='" + systemDisplayIdentifier + '\'' +
+                ", systemName='" + systemName + '\'' +
+                ", systemModel='" + systemModel + '\'' +
+                ", timestamp=" + timestamp +
+                ", timestampIso8601='" + timestampIso8601 + '\'' +
+                ", currentScore=" + currentScore +
+                ", newIssues=" + newIssues +
+                ", resolvedIssues=" + resolvedIssues +
+                '}';
+    }
 }

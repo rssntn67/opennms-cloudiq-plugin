@@ -61,4 +61,13 @@ public class ImpactedObject {
         this.objectNativeType = objectNativeType;
     }
 
+    @Override
+    public String toString() {
+        return "ImpactedObject{" +
+                "objectNativeId='" + objectNativeId + '\'' +
+                ", objectName='" + objectName + '\'' +
+                ", objectId='" + objectId + '\'' +
+                ", objectNativeType='" + objectNativeType + '\'' +
+                '}';
+    }
 }

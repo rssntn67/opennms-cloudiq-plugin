@@ -102,4 +102,16 @@ public class Issue {
         this.impactedObjects = impactedObjects;
     }
 
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id='" + id + '\'' +
+                ", impact=" + impact +
+                ", description='" + description + '\'' +
+                ", resolution='" + resolution + '\'' +
+                ", ruleId='" + ruleId + '\'' +
+                ", category='" + category + '\'' +
+                ", impactedObjects=" + impactedObjects +
+                '}';
+    }
 }
