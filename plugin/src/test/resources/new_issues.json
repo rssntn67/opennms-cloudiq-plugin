@@ -1,0 +1,27 @@
+{
+	"system_display_identifier": "APM00000000000",
+	"system_name": "APM00000000000",
+	"system_model": "Unity 400",
+	"timestamp": 1618325841541,
+	"timestamp_iso8601": "2021-04-13T14:57Z",
+	"current_score": 70,
+	"new_issues": [
+		{
+			"id": "6F17B328DA7D421207DB648C8A154B6130E32F7155B55F46D5A5312938D65B76",
+			"impact": -10,
+			"description": "Host 'test-host1' does not have connectivity to either SP.",
+			"resolution": "This host is disconnected from both SPA and SPB. Review your connectivity to ensure that all hosts have a connection to both SPs. Health checks for this host can be paused under Admin -> Customization.",
+			"rule_id": "UNITY_HOST_DISCONNECTED_RULE",
+			"category": "CONFIGURATION",
+			"impacted_objects": [
+				{
+					"object_native_id": "Host_49",
+					"object_name": null,
+					"object_id": "APM00000000000__HOST__Host_49",
+					"object_native_type": "HOST"
+				}
+			]
+		}
+	],
+	"resolved_issues": []
+}
