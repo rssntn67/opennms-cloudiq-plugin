@@ -1,0 +1,5023 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "T-Quadro API",
+    "description": "API per comunicare con la piattaforma T-Quadro",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Account/Login": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Metodo che autentica un utente con username e passsword",
+        "requestBody": {
+          "description": "TQuadro.Models.AccountViewModels.LoginAPIViewModel username e password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginAPIViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginAPIViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginAPIViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.AuthenticationUser",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationUser"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationUser"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationUser"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Username or password not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Clienti": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di clienti , impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData di OrderQueryable TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Clienti/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un cliente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo cliente",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.ClienteREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocietaREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocietaREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocietaREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Società non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Marche": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di marche secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData Queryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Marche/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di una marca",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo marca",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.MarcaREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcaREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcaREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarcaREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Marca non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Modelli": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di modelli secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "TipoAssetId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "MarcaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData Queryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Modelli/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un modello",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo modello",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.ModelloREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelloREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelloREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelloREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Modello non trovato",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/TipiAsset": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di tipi di asset secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "ParentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData Queryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/TipiAsset/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un tipo di asset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo tipo asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.TipoAssetREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoAssetREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoAssetREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoAssetREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tipo Asset non trovato",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Societa": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di società attive secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "ClienteId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData OrderedQueryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Societa/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di una società",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo società",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.SocietaREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocietaREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocietaREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocietaREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Società non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Sedi": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di sedi attive secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "SocietaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "UnitaOrganizzativaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData OrderedQueryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Sedi/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di una sede",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo sede",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.SedeREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Sede non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/UnitaOrganizzative": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di unità organizzative secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "SocietaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SedeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "GestioneMagazzino",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "GestioneTicket",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData OrderedQueryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/UnitaOrganizzative/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un unità organizzativa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo unità organizzativa",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.UnitaOrganizzativaREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitaOrganizzativaREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitaOrganizzativaREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitaOrganizzativaREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unita' organizzativa non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Attivita": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di attività con stato Attivo e Correlato secondo i filtri richiesti, impaginato (tutti gli elementi)",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData OrderedQueryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Attivita/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un attività",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo attività",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.AttivitaREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttivitaREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttivitaREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttivitaREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Attivita' non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Impatti": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di impatti secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "AttivitaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData OrderedQueryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Impatti/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un impatto",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo impatto",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.ImpattoREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Impatto non trovato",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Priorita": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di priorità secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "AttivitaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData OrderedQueryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Priorita/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di una priorità",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo priorità",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.PrioritaREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SedeREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Priorita' non trovata",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Colori": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di colori secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.PagingData Queryable di TQuadroAPI.Models.AnagraficheModels.AnagraficaListREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagingData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Colori/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un colore",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo colore",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.PrioritaREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColoreREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColoreREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ColoreREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Colore non trovato",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Utenti": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae un elenco di utenti secondo i filtri richiesti, impaginato (filters.PageSize || _defaultPageSize elementi)",
+        "parameters": [
+          {
+            "name": "ricerca",
+            "in": "query",
+            "description": "stringa per cercare un utente",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista di TQuadroAPI.Models.AnagraficheModels.UtenteREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtenteREST"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtenteREST"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtenteREST"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Anagrafiche/Utente/{id}": {
+      "get": {
+        "tags": [
+          "Anagrafiche"
+        ],
+        "summary": "Metodo che estrae i dettagli di un utente",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo utente",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.AnagraficheModels.UtenteREST",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UtenteREST"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UtenteREST"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UtenteREST"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Utente non trovato",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Assets": {
+      "post": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che estrae un elenco di asset secondo i filtri richiesti, impaginato (10 elementi)",
+        "requestBody": {
+          "description": "TQuadroAPI.Models.AssetModels.AssetFilters object per filtrare il risultato",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetFilters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ReflectionIT.Mvc.Paging.PagingList di TQuadroAPI.Models.AssetModels.AssetListREST"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Assets/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che estrae i dettagli di un asset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo dell'asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.DocumentiModels.DocumentoDetailREST"
+          },
+          "404": {
+            "description": "Asset non trovato"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Assets/History/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che estrae l' history di un asset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enumerable TQuadro.Models.AssetsViewModel.AssetHistory"
+          },
+          "404": {
+            "description": "Asset non trovato"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Assets/TechnicalData/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che estrae i dati tecnici di un asset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enumerable TQuadro.Models.ValoriMetadati"
+          },
+          "404": {
+            "description": "Asset non trovato"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Assets/TicketInAssetById/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che estrae i dati inerenti alla history dei ticket collegati a un asset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OrderedQueryable TQuadro.Models.Ticket"
+          },
+          "403": {
+            "description": "Non sei autorizzato a vedere il contenuto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Assets/GetAssetQrCodeImageById/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che crea l'ìimmagine del QR code di un assset in base all'id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo Asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Assets/GetAssetMap/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che crea l'immagine del posizionamento nella mappa dell'asset in base all'id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo Asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Assets/DetailsPdf/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Metodo che crea il pdf con i dettagli di un asset in base all'id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo asset",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Ticket/IncidentLineData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo per ticket incident LineChart nella dashboard in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Ticket/IncidentDoughnutData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo per ticket incident DoughnutChart nella dashboard in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Ticket/IncidentBarData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo per ticket incident BarChart nella dashboard in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Ticket/ChangeLineData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo per ticket change LineChart nella dashboard in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Ticket/ChangeDoughnutData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo per ticket change DoughnutChart nella dashboard in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Ticket/ChangeBarData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo per ticket change BarChart nella dashboard in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Asset/MarcheTipiAssetData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per BarChart asset per marca filtrato per tipo asset nella dashboard Assets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Identificativo tipo asset",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Asset/DoughnutAssetsData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per DoughnutChart tipi di asset nella dashboard Assets",
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Asset/RichiesteTonerData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per LineChart movimenti toner in un range di date nella dashboard Assets",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/ControlloSla/TempiInterventoData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per DoughnutChart in tempi di intervento in un range di date nella dashboard Controllo SLA",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/ControlloSla/TempiRisoluzioneData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per DoughnutChart in tempi di risoluzione in un range di date nella dashboard Controllo SLA",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/ControlloSla/RispettoSlaData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per BarChart in Rispetto degli SLA per livello d'impatto in un range di date nella dashboard Controllo SLA",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/LivelliServizio/AccesibilitaservizioData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per DoughnutChart accessibilità servizio in un range di date nella dashboard Livelli di servizio generali",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/LivelliServizio/CountFeedbackData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che estrae i dati per il conteggio dei voti nella dasbhoard Livelli di servizio generali",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nome del tipo di livello di servizio generale (accesibilita, tempestivita, efficacia:default)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "object{values:int[]}"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/LivelliServizio/EfficaciaRisoluzioneData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per DoughnutChart efficacia risoluzione in un range di date nella dashboard Livelli di servizio generali",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/LivelliServizio/TempestivitarispostaData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per DoughnutChart tempestività risposta in un range di date nella dashboard Livelli di servizio generali",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/KPI/CustomerSatisfactionData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per Chart customer stisfaction in un range di date per KPI",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Hardware/TempestivitaInvioHardwareData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per Chart Richieste hardware filtrata per range di date e attività nella dashboard Richieste hardware.",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "attivitaid",
+            "in": "query",
+            "description": "Identificativo attività",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto || L'attività selezionata non è corretta"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Incident/ScostamentoData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per lo scostamento medio (ore e minuti) nella dasbhoard Incident filtrato per range di date e attività",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "attivitaid",
+            "in": "query",
+            "description": "Identificativo attività",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{result_h:int, result_m:int}(ore e minuti)"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Incident/RequestDisponibilitaServizioData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per il DoughnutChart Disponibilità servizio filtrato per range di date e attività nella dasbhoard Incident",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "attivitaid",
+            "in": "query",
+            "description": "Identificativo attività",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto || Verificare che l'attività sia stata selezionata"
+          },
+          "500": {
+            "description": "Exception || Verificare che il parametro availabilityTimeHours sia configurato"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Incident/RequestChiuseInSLAData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per Chart ticket chiusi in SLA in un range di date",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Incident/IncidentChiusiInSLAData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per Chart Incident chiusi in SLA filtrato per range di date e attività nella dashboard Incident",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "attivitaid",
+            "in": "query",
+            "description": "Identificativo attività",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto || Verificare che l'attività sia stata selezionata"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Dashboards/Incident/TempestivitaData": {
+      "get": {
+        "tags": [
+          "Dashboards"
+        ],
+        "summary": "Metodo che strae i dati per Chart Incident chiusi in SLA filtrato per range di date e attività nella dashboard Incident",
+        "parameters": [
+          {
+            "name": "classificazioneAttivitaId",
+            "in": "query",
+            "description": "Identificativo classificazione attività",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "Data inizio range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "Data fine range",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "attivitaid",
+            "in": "query",
+            "description": "Identificativo attività",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadro.Models.DashboardsViewModels.ChartData"
+          },
+          "400": {
+            "description": "Verificare che l'intervallo di date sia corretto || Verificare che l'attività sia stata selezionata"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Documenti": {
+      "get": {
+        "tags": [
+          "Documenti"
+        ],
+        "summary": "Metodo che estrae un elenco di documenti secondo i filtri richiesti, impaginato (10 elementi)",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "TipoCategoriaId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Titolo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Formato",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "FileName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Versione",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataFineValiditaDa",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataFineValiditaA",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataCreazioneDa",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataCreazioneA",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataModificaDa",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataModificaA",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UtenteCreatore",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UtenteModifica",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TagsId",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ReflectionIT.Mvc.Paging.PagingList di TQuadroAPI.Models.DocumentiModels.DocumentoSummaryREST"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Documenti/{id}": {
+      "get": {
+        "tags": [
+          "Documenti"
+        ],
+        "summary": "Metodo che estrae i dettagli di un Documento in base all' Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo del documento",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.DocumentiModels.DocumentoDetailREST"
+          },
+          "404": {
+            "description": "Documento non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Documenti"
+        ],
+        "summary": "Metodo che modifica un documento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo del documento da modificare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "TQuadro.Models.DocumentoUpdate object con campi per modifica documento",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoUpdate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoUpdate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Documento non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Documenti"
+        ],
+        "summary": "Metodo che elimina un documento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo documento da eliminare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Documento non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Movimenti": {
+      "get": {
+        "tags": [
+          "Movimenti"
+        ],
+        "summary": "Metodo che estrae un elenco di movimenti secondo i filtri richiesti, impaginato (10 elementi)",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Assegnatario",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Responsabile",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DestinazioneId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "CasualeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ModalitaRichiestaCodice",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataMovimentoDa",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DataMovimentoA",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ReflectionIT.Mvc.Paging.PagingList di TQuadro.Models.MovimentiViewModels.IndexMovimentiViewModel"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Movimenti/{id}": {
+      "get": {
+        "tags": [
+          "Movimenti"
+        ],
+        "summary": "Metodo che estrae il dettaglio di un movimento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo del movimento",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.MovimentiModels.MovimentoDetailsREST"
+          },
+          "404": {
+            "description": "Movimento non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Movimenti"
+        ],
+        "summary": "Metodo che modifica un movimento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo movimento da modificare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "TQuadro.Models.MovimentiViewModels.MovimentoEdit object con campi per modifica movimento",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovimentoEdit"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovimentoEdit"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovimentoEdit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Movimento non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Movimenti/Assets": {
+      "get": {
+        "tags": [
+          "Movimenti"
+        ],
+        "summary": "Metodo che estrae gli asset movimentati secondo i filtri richiesti",
+        "parameters": [
+          {
+            "name": "ricerca",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "causale",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "activeTab",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "assetDaEscludere",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "name": "destinazione",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sede",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "object in base ai filtri scelti"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Movimenti/Annulla/{id}": {
+      "post": {
+        "tags": [
+          "Movimenti"
+        ],
+        "summary": "Metodo che annulla un movimento e eventuale ticket collegato",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo movimento da annullare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Movimento non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Movimenti/Conferma/{id}": {
+      "post": {
+        "tags": [
+          "Movimenti"
+        ],
+        "summary": "Metodo che conferma un movimento e chiude un eventuale ticket collegato",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo movimento da confermare",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "confirmed",
+            "in": "query",
+            "description": "Codice conferma",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Movimento non trovato"
+          },
+          "500": {
+            "description": "Exceptionr"
+          }
+        }
+      }
+    },
+    "/api/OpenNMS/Asset/{ipAddress}": {
+      "get": {
+        "tags": [
+          "OpenNMS"
+        ],
+        "summary": "",
+        "parameters": [
+          {
+            "name": "ipAddress",
+            "in": "path",
+            "description": "Identifica l'ip address dell'asset",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "!:Models.OpenNMS.Asset",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOpenNMS"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOpenNMS"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOpenNMS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Invalid IP address format"
+          },
+          "401": {
+            "description": "Unauthorized: Unauthorized user"
+          },
+          "404": {
+            "description": "Not Found: Asset Not Found"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/OpenNMS/Asset": {
+      "post": {
+        "tags": [
+          "OpenNMS"
+        ],
+        "summary": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetOpenNMS"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetOpenNMS"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetOpenNMS"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "!:Models.OpenNMS.Asset",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOpenNMS"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOpenNMS"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetOpenNMS"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request: Invalid IP address format"
+          },
+          "401": {
+            "description": "Unauthorized: Unauthorized user"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          }
+        }
+      }
+    },
+    "/api/OpenNMS/DiscoveredDate/{assetId}": {
+      "put": {
+        "tags": [
+          "OpenNMS"
+        ],
+        "summary": "",
+        "parameters": [
+          {
+            "name": "assetId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Discovered date updated"
+          },
+          "400": {
+            "description": "Bad Request: Asset not found"
+          },
+          "401": {
+            "description": "Unauthorized: Unauthorized user"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          }
+        }
+      }
+    },
+    "/api/Tickets": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che estrae un elenco di ticket secondo i filtri richiesti, impaginato (10 elementi)",
+        "requestBody": {
+          "description": "TQuadro.Models.TicketFilters object per filtrare il risultato",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketFilters"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketFilters"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketFilters"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ReflectionIT.Mvc.Paging.PagingList di TQuadroAPI.Models.TicketModels.TicketListREST"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Tickets/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che estrae il dettaglio di un ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che modifica un ticket e la sua history",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Identificativo priorita, Id impatto, Id classificazione TQuadro.Models.TicketUpdate",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketUpdate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketUpdate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "404": {
+            "description": "Ticket non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Tickets/History/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che estrae l'history di un ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enumerable TQuadroAPI.Models.TicketModels.VariazioniTicketREST"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Tickets/TechnicalNotes/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che estrae le note tecniche di un ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enumerable { Id, IdTicket, CreationDate, CreationUser, Note }"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/Tickets/TechnicalNotes": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che aggiunge una nota tecnica a un ticket",
+        "requestBody": {
+          "description": "testo della nota e identificativo ticket dove aggiungerla TQuadroAPI.Models.TicketModels.NotaTecnicaREST",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotaTecnicaREST"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotaTecnicaREST"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotaTecnicaREST"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "succes || $\"Error not exist ticket with IdTicket {nota.TicketId}\" !! error message"
+          }
+        }
+      }
+    },
+    "/api/Tickets/LinkedEvent": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che aggiunge un inteGrazione a un ticket",
+        "requestBody": {
+          "description": "Identificatore integrazione,Id ticket e Id linkedEvent TQuadroAPI.Models.TicketModels.IntegrazioneTicketREST",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrazioneTicketREST"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrazioneTicketREST"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrazioneTicketREST"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "succes || $\"Error not exist Intgrazione with Id : {integrazione.IntegrazioneId} or not exist Ticket with id : {integrazione.TicketId}\" || error message"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Cancel": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che cancella un ticket",
+        "requestBody": {
+          "description": "Identificatore ticket, note TQuadro.Models.TicketActions",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "500": {
+            "description": "Errore in Cancel, exception:{ex.Message}"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Communications/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metdodo che estrae un elenco di comunicazioni appartenenti a un ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificativo ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "elenco comunicazioni"
+          },
+          "500": {
+            "description": "Errore in Communication, messagge: Non esiste un ticket con Id {id}"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Communications": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che aggiunge una comunicazione a un ticket",
+        "requestBody": {
+          "description": "Identificativo ticket, comunicazione da aggiungere TQuadro.Models.TicketActions",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "500": {
+            "description": "Errore in CreateComunicazioneSmart, exception: {ex.Message}"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Create": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che crea un nuovo ticket e collega eventuali asset al ticket(se presenti)",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "AttivitaId",
+                  "DescrizioneAttivita",
+                  "NrInterno",
+                  "Piano",
+                  "SedeId",
+                  "SocietaId",
+                  "Stanza",
+                  "UnitaOrganizzativaId"
+                ],
+                "type": "object",
+                "properties": {
+                  "RichiedenteId": {
+                    "type": "string"
+                  },
+                  "NrInterno": {
+                    "type": "string"
+                  },
+                  "SocietaId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "UnitaOrganizzativaId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "SedeId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Piano": {
+                    "type": "string"
+                  },
+                  "Stanza": {
+                    "type": "string"
+                  },
+                  "AttivitaId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "PrioritaId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "ImpattoId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "CentroDiCostoId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "DescrizioneAttivita": {
+                    "type": "string"
+                  },
+                  "SerialNumbers": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "RichiedenteId": {
+                  "style": "form"
+                },
+                "NrInterno": {
+                  "style": "form"
+                },
+                "SocietaId": {
+                  "style": "form"
+                },
+                "UnitaOrganizzativaId": {
+                  "style": "form"
+                },
+                "SedeId": {
+                  "style": "form"
+                },
+                "Piano": {
+                  "style": "form"
+                },
+                "Stanza": {
+                  "style": "form"
+                },
+                "AttivitaId": {
+                  "style": "form"
+                },
+                "PrioritaId": {
+                  "style": "form"
+                },
+                "ImpattoId": {
+                  "style": "form"
+                },
+                "CentroDiCostoId": {
+                  "style": "form"
+                },
+                "DescrizioneAttivita": {
+                  "style": "form"
+                },
+                "SerialNumbers": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "201": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Assign": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che assegna un ticket a un utente",
+        "requestBody": {
+          "description": "Nome assegnatario,Id ticket, note, processNow TQuadro.Models.TicketAssign",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketAssign"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketAssign"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketAssign"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "404": {
+            "description": "Assegnatario non trovato || Ticket non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Process": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che mette in lavorazione un ticket",
+        "requestBody": {
+          "description": "Identificativo ticket, note TQuadro.Models.TicketActions",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "404": {
+            "description": "Ticket non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Suspend": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che sospende la lavorazione di un ticket",
+        "requestBody": {
+          "description": "Identificativo ticket, note TQuadro.Models.TicketActions",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketActions"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "404": {
+            "description": "Ticket non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Transfer": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che riassegna un ticket a un altro CentroInterno",
+        "requestBody": {
+          "description": "Identificativo TicketManagementGroup, Id ticket, note TQuadro.Models.TicketTransfer",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketTransfer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketTransfer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketTransfer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "500": {
+            "description": "Errore in RiassegnaTicket"
+          }
+        }
+      }
+    },
+    "/api/Tickets/Close": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Metodo che chiude un ticket",
+        "requestBody": {
+          "description": "Identificativo ticket, note, EsitoPositivo TQuadro.Models.TicketClose",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketClose"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketClose"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketClose"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "TQuadroAPI.Models.TicketModels.TicketDetailsREST"
+          },
+          "404": {
+            "description": "Ticket non trovato"
+          },
+          "500": {
+            "description": "Exception"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnagraficaListREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetFilters": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipoAsset": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "marca": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "modello": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descrizione": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "serialnumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "responsabile": {
+            "type": "string",
+            "nullable": true
+          },
+          "assegnatario": {
+            "type": "string",
+            "nullable": true
+          },
+          "stato": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "consumabile": {
+            "type": "boolean"
+          },
+          "nrOrdine": {
+            "type": "string",
+            "nullable": true
+          },
+          "annoOrdine": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dataAggiornamentoDa": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataAggiornamentoA": {
+            "type": "string",
+            "nullable": true
+          },
+          "numeroInventarioOpzionale": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nuovo": {
+            "type": "boolean"
+          },
+          "unitaOrganizzativa": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetOpenNMS": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "hostname": {
+            "type": "string",
+            "nullable": true
+          },
+          "nameSNMP": {
+            "type": "string",
+            "nullable": true
+          },
+          "sysObjectIdSNMP": {
+            "type": "string",
+            "nullable": true
+          },
+          "locationSNMP": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactSNMP": {
+            "type": "string",
+            "nullable": true
+          },
+          "descriptionSNMP": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssetSelezionato": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantita": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sostuitoCon": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descrizione": {
+            "type": "string",
+            "nullable": true
+          },
+          "cespite": {
+            "type": "string",
+            "nullable": true
+          },
+          "serialNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "consumabile": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "daDismettere": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AttivitaREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthenticationUser": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/UtenteREST"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ColoreREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DocumentoUpdate": {
+        "type": "object",
+        "properties": {
+          "categoriaId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "titolo": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "versione": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataFineValidita": {
+            "type": "string",
+            "nullable": true
+          },
+          "clienteAll": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "societaAll": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "sedeAll": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IntegrazioneTicketREST": {
+        "type": "object",
+        "properties": {
+          "integrazioneId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "linkedEventId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginAPIViewModel": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MarcaREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ModelloREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoAsset": {
+            "type": "string",
+            "nullable": true
+          },
+          "marca": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MovimentoEdit": {
+        "type": "object",
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssetSelezionato"
+            },
+            "nullable": true
+          },
+          "responsabileSceltoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "assegnatarioSceltoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "tecnicoConsegnaSceltoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataMovimento": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotaTecnicaREST": {
+        "required": [
+          "testoNota",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "testoNota": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagingData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnagraficaListREST"
+            },
+            "nullable": true
+          },
+          "firstPageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentPageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastPageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "recordsInPage": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRecordCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SedeREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SocietaREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "cliente": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketActions": {
+        "required": [
+          "note",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketAssign": {
+        "required": [
+          "note",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "assegnatario": {
+            "type": "string",
+            "nullable": true
+          },
+          "processNow": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketClose": {
+        "required": [
+          "note",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "esitoPositivo": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketFilters": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrato": {
+            "type": "boolean"
+          },
+          "assegnato": {
+            "type": "boolean"
+          },
+          "lavorazione": {
+            "type": "boolean"
+          },
+          "chiuso": {
+            "type": "boolean"
+          },
+          "annullato": {
+            "type": "boolean"
+          },
+          "sospeso": {
+            "type": "boolean"
+          },
+          "trasferito": {
+            "type": "boolean"
+          },
+          "approvato": {
+            "type": "boolean"
+          },
+          "da_approvare": {
+            "type": "boolean"
+          },
+          "dataCreazioneStart": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataCreazioneEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataChiusuraStart": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataChiusuraEnd": {
+            "type": "string",
+            "nullable": true
+          },
+          "idAsset": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketTransfer": {
+        "required": [
+          "note",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ticketManagementGroupId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TicketUpdate": {
+        "type": "object",
+        "properties": {
+          "priorityId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "impactId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "classificationId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TipoAssetREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UnitaOrganizzativaREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "codice": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modificationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "modificationUser": {
+            "type": "string",
+            "nullable": true
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UtenteREST": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n \r\n                      Enter 'Bearer' [space] and then your token in the text input below.\r\n                      \\r\\n\\r\\nExample: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}
