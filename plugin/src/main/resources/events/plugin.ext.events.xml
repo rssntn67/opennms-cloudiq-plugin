@@ -8,11 +8,27 @@
         <alarm-data reduction-key="uei.opennms.org/cloudiq/clearEvent:%parm[id]%" alarm-type="2" clear-key="uei.opennms.org/cloudiq/raiseEvent:%parm[id]%"/>
     </event>
     <event>
-        <uei>uei.opennms.org/cloudiq/raiseEvent</uei>
+        <uei>uei.opennms.org/cloudiq/raiseEventCritical</uei>
         <event-label>OpenNMS CloudIQ Plugin: Raise event</event-label>
         <descr>Raise Event: %parm[all]%</descr>
         <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Raise Event: %parm[SystemName]% %parm[description]%</logmsg>
         <severity>Critical</severity>
-        <alarm-data reduction-key="%uei%:%parm[id]%" alarm-type="1" />
+        <alarm-data reduction-key="uei.opennms.org/cloudiq/raiseEvent:%parm[id]%" alarm-type="1" />
+    </event>
+    <event>
+        <uei>uei.opennms.org/cloudiq/raiseEventMajor</uei>
+        <event-label>OpenNMS CloudIQ Plugin: Raise event</event-label>
+        <descr>Raise Event: %parm[all]%</descr>
+        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Raise Event: %parm[SystemName]% %parm[description]%</logmsg>
+        <severity>Major</severity>
+        <alarm-data reduction-key="uei.opennms.org/cloudiq/raiseEvent:%parm[id]%" alarm-type="1" />
+    </event>
+    <event>
+        <uei>uei.opennms.org/cloudiq/raiseEventMinor</uei>
+        <event-label>OpenNMS CloudIQ Plugin: Raise event</event-label>
+        <descr>Raise Event: %parm[all]%</descr>
+        <logmsg dest="logndisplay">OpenNMS CloudIQ Plugin: Raise Event: %parm[SystemName]% %parm[description]%</logmsg>
+        <severity>Minor</severity>
+        <alarm-data reduction-key="uei.opennms.org/cloudiq/raiseEvent:%parm[id]%" alarm-type="1" />
     </event>
 </events>

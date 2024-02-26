@@ -24,7 +24,10 @@ public class CloudIqEventForwarder {
     private static final Logger LOG = LoggerFactory.getLogger(CloudIqEventForwarder.class);
 
     private static final String UEI_PREFIX = "uei.opennms.org/cloudiq";
-    private static final String RAISE_EVENT_UEI = UEI_PREFIX + "/raiseEvent";
+    //private static final String RAISE_EVENT_UEI = UEI_PREFIX + "/raiseEvent";
+    private static final String RAISE_EVENT_CRITICAL_UEI = UEI_PREFIX + "/raiseEventCritical";
+    private static final String RAISE_EVENT_MAJOR_UEI = UEI_PREFIX + "/raiseEventMajor";
+    private static final String RAISE_EVENT_MINOR_UEI = UEI_PREFIX + "/raiseEventMinor";
     private static final String CLEAR_EVENT_UEI = UEI_PREFIX + "/clearEvent";
 
     private final MetricRegistry metrics = new MetricRegistry();
@@ -115,8 +118,21 @@ public class CloudIqEventForwarder {
         }
         for (Issue issue : alert.getNewIssues()) {
             ImmutableInMemoryEvent.Builder eventBuilder = eventBuilder(alert,node);
-            eventBuilder.setUei(RAISE_EVENT_UEI);
-            eventBuilder.setSeverity(Severity.CRITICAL);
+            //eventBuilder.setUei(RAISE_EVENT_UEI);                       
+            if (alert.getCurrentScore()>90)
+            {
+                eventBuilder.setUei(RAISE_EVENT_CRITICAL_UEI);
+                eventBuilder.setSeverity(Severity.CRITICAL);
+            }
+            else if (alert.getCurrentScore()<90 && alert.getCurrentScore()>75){
+                eventBuilder.setUei(RAISE_EVENT_MAJOR_UEI);
+                eventBuilder.setSeverity(Severity.MAJOR);
+            }
+            else{
+                eventBuilder.setUei(RAISE_EVENT_MINOR_UEI);
+                eventBuilder.setSeverity(Severity.MINOR);               
+            }
+            
             build(eventBuilder,issue);
             eventList.add(eventBuilder.build());
         }
